@@ -7,12 +7,13 @@
 case "$1" in
   start)
 	printf "Starting network: "
-	/sbin/udhcpc -b
+	start-stop-daemon -S -q -b -m -p /var/run/udhcpc.pid \
+		--exec /sbin/udhcpc -- -f
 	[ $? = 0 ] && echo "OK" || echo "FAIL"
 	;;
   stop)
 	printf "Stopping network: "
-	killall udhcpc
+	start-stop-daemon -K -q -p /var/run/udhcpc.pid
 	[ $? = 0 ] && echo "OK" || echo "FAIL"
 	;;
   restart|reload)
@@ -25,4 +26,3 @@ case "$1" in
 esac
 
 exit $?
-
