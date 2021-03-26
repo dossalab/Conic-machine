@@ -1,0 +1,22 @@
+#!/bin/sh
+
+#
+# Show only critical messages on console, do not print info or stuff
+#
+
+case "$1" in
+  start)
+	printf "Changing printk loglevel: "
+	echo "1" > /proc/sys/kernel/printk
+	[ $? = 0 ] && echo "OK" || echo "FAIL"
+	;;
+  stop)
+	;;
+  restart|reload)
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac
+
+exit $?
