@@ -1,0 +1,28 @@
+#!/bin/sh
+
+#
+# Starts conic-server in background mode
+#
+
+case "$1" in
+  start)
+	printf "Starting conic-server: "
+	start-stop-daemon -S -q -b -m -p /var/run/conic-server.pid \
+		--exec /usr/bin/conic-server
+	[ $? = 0 ] && echo "OK" || echo "FAIL"
+	;;
+  stop)
+	printf "Stopping conic-server: "
+	start-stop-daemon -K -q -p /var/run/conic-server.pid
+	[ $? = 0 ] && echo "OK" || echo "FAIL"
+	;;
+  restart|reload)
+	"$0" stop
+	"$0" start
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac
+
+exit $?
