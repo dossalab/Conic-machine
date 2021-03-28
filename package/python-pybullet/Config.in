@@ -1,0 +1,9 @@
+config BR2_PACKAGE_PYTHON_PYBULLET
+	bool "python-pybullet"
+	depends on BR2_PACKAGE_PYTHON3
+	help
+	  Official Python Interface for the Bullet Physics SDK
+	  specialized for Robotics Simulation and Reinforcement
+	  Learning.
+
+	  https://github.com/bulletphysics/bullet3

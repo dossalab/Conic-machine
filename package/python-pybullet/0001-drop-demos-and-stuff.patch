@@ -1,0 +1,41 @@
+diff --git a/setup.py b/setup.py
+index 077f697..a149f0a 100644
+--- a/setup.py
++++ b/setup.py
+@@ -451,26 +451,6 @@ else:
+ 
+ setup_py_dir = os.path.dirname(os.path.realpath(__file__))
+ 
+-need_files = []
+-datadir = "examples/pybullet/gym/pybullet_data"
+-
+-hh = setup_py_dir + "/" + datadir
+-
+-for root, dirs, files in os.walk(hh):
+-  for fn in files:
+-    ext = os.path.splitext(fn)[1][1:]
+-    if ext and ext in 'yaml index meta data-00000-of-00001 png gif jpg urdf sdf obj txt mtl dae off stl STL xml '.split(
+-    ):
+-      fn = root + "/" + fn
+-      need_files.append(fn[1 + len(hh):])
+-
+-print("found resource files: %i" % len(need_files))
+-for n in need_files:
+-  print("-- %s" % n)
+-print("packages")
+-print(find_packages('examples/pybullet/gym'))
+-print("-----")
+-
+ extensions = []
+ 
+ pybullet_ext = Extension(
+@@ -527,7 +507,5 @@ setup(
+         'Programming Language :: Python :: 3.8', 'Topic :: Games/Entertainment :: Simulation',
+         'Topic :: Scientific/Engineering :: Artificial Intelligence',
+         'Framework :: Robot Framework'
+-    ],
+-    package_dir={'': 'examples/pybullet/gym'},
+-    packages=[x for x in find_packages('examples/pybullet/gym')],
+-    package_data={'pybullet_data': need_files})
++    ]
++)
