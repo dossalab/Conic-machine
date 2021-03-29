@@ -20,6 +20,9 @@ br-downloads	:= https://buildroot.org/downloads/
 br-archive	:= buildroot-$(br-version).tar.gz
 br-bundle	:= buildroot-$(br-version)
 
+# We cache downloads here to speedup builds
+cache-dir	:= .cache
+
 # Buildroot uses this env var to found our out-of-tree stuff
 export BR2_EXTERNAL := $(shell pwd)
 
@@ -43,8 +46,12 @@ $(config-list) $(br-commands): $(br-bundle)
 	$(ECHO) "BR" "$@"
 	$(V) $(MAKE) -C $< $@
 
-to-cleanup := $(br-archive) $(br-bundle)
-full-clean:
+br-clean:
+	$(ECHO) "RM" "$(br-bundle)"
+	$(V)$(RM) $(br-bundle)
+
+to-cleanup := $(br-archive) $(cache-dir)
+full-clean: br-clean
 	$(ECHO) "RM" "$(to-cleanup)"
 	$(V)$(RM) $(to-cleanup)
 
